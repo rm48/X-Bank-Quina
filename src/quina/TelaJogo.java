@@ -29,6 +29,7 @@ import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Random;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 
 public class TelaJogo extends JFrame implements ActionListener {
@@ -38,7 +39,7 @@ public class TelaJogo extends JFrame implements ActionListener {
 	private static final long serialVersionUID = 1L;
 	private JPanel painelNumeros, painelBotoes, painelInfo;
 	private JLabel labelDica;
-	private JButton botaoApostar,  botaoBank, botaoSaldo,
+	 JButton botaoApostar,  botaoBank, botaoSaldo,
 			botaoValores, botaoChances, botaoResultados, botaoAcertos;
 	private JButton posicoesFiguras[];
 	private Icon imagemApostar,  imagemBank, imagemSaldo,
@@ -52,7 +53,7 @@ public class TelaJogo extends JFrame implements ActionListener {
 	int palpite = 0, bola = 0;
 	int premioMinimo=2;
 	float valorAposta;
-	private boolean proxConc = false, temAcerto = false, contaDispnvl = false;
+	private boolean proxConc = false, contaDispnvl = false;
 	boolean saldoBoleano,
 			objResCriado=false, objAceCriado=false;;
 	static boolean transferiu = false;
@@ -67,11 +68,15 @@ public class TelaJogo extends JFrame implements ActionListener {
     Popup objResultados, objAcertos;
     String dadosContaString;//"nome,senha,conta,saldo,credito"
     
+    //dadosContaString="";   
+      
+   
+    
     // - - - - - - - - -// - - - - - - - - -// - - - - - - - -
     // - - - - - - - - C O N S T R U C T O R  - - - - - - - - 
 	public TelaJogo() {
 		super("Quina 0.2");
-		abrirArquivo();
+		//abrirArquivo();
 		acertos = new int[apostaMinima];
 		sorteados = new int[apostaMinima];
 		numerosCartela = new int[numerosTotal];
@@ -80,7 +85,7 @@ public class TelaJogo extends JFrame implements ActionListener {
 		imagemApostar = new ImageIcon(getClass().getResource("/img/apostar.gif"));
 		botaoApostar = new JButton("Apostar", imagemApostar);
 		botaoApostar.addActionListener(this);
-		
+		botaoApostar.setEnabled(false);
 		
 		imagemBank = new ImageIcon(getClass().getResource("/img/bank.png"));
 		botaoBank = new JButton("Banco", imagemBank);
@@ -89,6 +94,7 @@ public class TelaJogo extends JFrame implements ActionListener {
 		imagemSaldo = new ImageIcon(getClass().getResource("/img/saldo.png"));
 		botaoSaldo = new JButton("Saldo", imagemSaldo);
 		botaoSaldo.addActionListener(this);
+		botaoSaldo.setEnabled(false);
 		
 
 		imagemValores = new ImageIcon(getClass().getResource("/img/valores.png"));
@@ -102,14 +108,18 @@ public class TelaJogo extends JFrame implements ActionListener {
 		imagemResultados = new ImageIcon(getClass().getResource("/img/resultados.png"));
 		botaoResultados = new JButton("Resultados", imagemResultados);
 		botaoResultados.addActionListener(this);
+		botaoResultados.setEnabled(false);
 		
 		imagemAcertos = new ImageIcon(getClass().getResource("/img/acertos.png"));
 		botaoAcertos = new JButton("Acertos", imagemAcertos);
 		botaoAcertos.addActionListener(this);
+		botaoAcertos.setEnabled(false);
 
 		painelNumeros = new JPanel();
 		painelBotoes = new JPanel();
 		painelInfo = new JPanel();
+		
+		abrirArquivo();
 		
 		labelDica = new JLabel("Quina 0.2");
 		labelDica.setText("Proximo concurso: "+Integer.toString(concursoAtual+1));
@@ -189,7 +199,7 @@ public class TelaJogo extends JFrame implements ActionListener {
 							}
 							sorteados[i] = bola + 1; // adiciona ao array sorteados
 						}
-						ordenar();
+						Arrays.sort(sorteados);
 						String res = "";
 						res+=concursoAtual+": ";
 						for (int num : sorteados) {
@@ -206,6 +216,7 @@ public class TelaJogo extends JFrame implements ActionListener {
                             BufferedWriter bw = new BufferedWriter(osw);
                             bw.write(res + "\r\n");
                             bw.close();
+                            botaoResultados.setEnabled(true);
                         } catch (Exception ex) {
                             ex.printStackTrace();
                         }
@@ -233,6 +244,7 @@ public class TelaJogo extends JFrame implements ActionListener {
 	                                BufferedWriter bw = new BufferedWriter(osw);
 	                                bw.write(ace + "\r\n");
 	                                bw.close();
+	                                botaoAcertos.setEnabled(true);
 	                            } catch (Exception ex) {
 	                                ex.printStackTrace();
 	                            }
@@ -270,7 +282,8 @@ public class TelaJogo extends JFrame implements ActionListener {
                 dadosContaString=Atm.contatxtLidaAtual.getNome()+","+Atm.contatxtLidaAtual.getSenha()
                                     +","+Atm.contatxtLidaAtual.getConta()+","+Atm.saldoLog
                                     +","+Atm.contatxtLidaAtual.getCredito();         
-                botaoSaldo.setEnabled(true);   
+                botaoSaldo.setEnabled(true);
+                botaoApostar.setEnabled(true);
                 contaDispnvl = true;
             }
             else{
@@ -360,21 +373,6 @@ public class TelaJogo extends JFrame implements ActionListener {
 		}
 	} // fim do método actionPerformed (Eventos de clique no menu e botões)
 
-	
-	
-	//------------------------------------------------------------------------------
-    public  void ordenar() {
-		int i, j,aux;  
-		for(i = 0; i < apostaMinima; i++){  
-			for(j =0; j < apostaMinima-1; j++){  
-				if(sorteados[j] > sorteados[j+1]){  
-					aux = sorteados[j];  
-					sorteados[j] = sorteados[j+1];  
-					sorteados[j+1] = aux;  
-				}  
-			}  
-		}              
-	}// end ordenar 
     
 	//------------------------------------------------------------------------------    
     public float tabelaValor(int bet) {
@@ -428,6 +426,7 @@ public class TelaJogo extends JFrame implements ActionListener {
 				labelDica.setText("Proximo concurso: "+ (concursoAtual+1));
 			}
 		} else {
+			labelDica.setText("Proximo concurso: "+ (concursoAtual+1));
 			limpar();
 		}
 	} // fim do método marcar
@@ -487,9 +486,17 @@ public class TelaJogo extends JFrame implements ActionListener {
             linha = br.readLine();
         }
         concursoAtual=listaRsltds.size();
+        if (listaRsltds.size()>0) {
+            //temResultado=true;
+        	botaoResultados.setEnabled(true);
+        	//System.out.println("Resultados é true.");
+        	}
         br.close();
         } catch (Exception ex) {
-            ex.printStackTrace();
+           // ex.printStackTrace();
+        	System.out.println("Faça sua aposta.");
+        	//botaoResultados.setEnabled(false);
+        	
         }
         //DOIS OU + ACERTOS
         InputStream isAcer;
@@ -502,11 +509,17 @@ public class TelaJogo extends JFrame implements ActionListener {
             listaAcrts.add(s);//System.out.println(s);
             s = br.readLine();
         }
-        if (listaAcrts.size()>0)
-            temAcerto=true;
+        if (listaAcrts.size()>0) {
+            //temAcerto=true;
+        	botaoAcertos.setEnabled(true);
+        	//System.out.println("Acertos é true.");
+        	}
         br.close();
         } catch (Exception ex) {
-            ex.printStackTrace();
+            //ex.printStackTrace();
+        	System.out.println("Boa sorte!");
+        	// botaoAcertos.setEnabled(false);
+        	
         } 
     }
 //-----------------------------------------------------------------------   

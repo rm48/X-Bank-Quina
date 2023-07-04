@@ -20,11 +20,20 @@ public class Cadastro {
      * @throws IOException
      */
     public static void gravaCliente(ContaTxt clienteToTxt) throws IOException{
-    	FileWriter arquivo = new FileWriter(ARQUIVO,true);
-    	PrintWriter gravarArquivo = new PrintWriter(arquivo);
-    	gravarArquivo.println(clienteToTxt.gerarString());
-    	arquivo.flush();	//libera a gravaçao
-    	arquivo.close();	//fecha o arquivo
+    	File arquivo = new File(ARQUIVO);
+    	try {
+    		if (!arquivo.exists()) {
+    		//cria um arquivo (vazio)
+    		arquivo.createNewFile();
+    		}
+    	FileWriter fw = new FileWriter(ARQUIVO,true);
+    	PrintWriter pw = new PrintWriter(fw);
+    	pw.println(clienteToTxt.gerarString());
+    	fw.flush();	//libera a gravaçao
+    	fw.close();	//fecha o arquivo
+    	} catch (IOException ex) {
+    		ex.printStackTrace();
+    		}
     }
  // FIM de gravaCliente
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -33,8 +42,12 @@ public class Cadastro {
      * Retorna as linhas de cadastro.txt no formato List
      */
     public static List<ContaTxt> leCntas() throws IOException{
+    	File arquivo = new File(ARQUIVO);
     	 //Lista que vamos retornar
         List<ContaTxt> listOnTxt = new ArrayList<ContaTxt>(0);
+    	try {
+    		if (arquivo.exists()) {
+    	
         FileReader arq = new FileReader(ARQUIVO);
         //armazenando conteudo no arquivo no buffer
         BufferedReader lerArq = new BufferedReader(arq);
@@ -55,7 +68,13 @@ public class Cadastro {
             }
         }
         arq.close();
-        return listOnTxt;
+       
+    		}
+    	} catch (IOException ex) {
+    		//ex.printStackTrace();
+    		System.out.println("Abra uma conta.");
+    		}
+    	 return listOnTxt;
     }
     // FIM de leCntas
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
