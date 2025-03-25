@@ -1,8 +1,5 @@
 package quina;
 
-/**
- * Esta classe guarda as informacnoes do Cliente
- */
 class ContaTxt {
 	public static final String SEPARADOR = ",";
     private String nome; 
@@ -10,26 +7,18 @@ class ContaTxt {
     private String conta;
     private String saldo;
     private String credito;
-    /**
-     * Contrutor padrão
-     */
+
     public ContaTxt() {      }
-    /**
-     * recebe a linha para popular o Objeto
-     * @param line
-     */
+
     public ContaTxt(String line) { 
     	if(null != line ){
-            //Vamos quebrar a linha no separador...
             String[] dados = line.split(SEPARADOR);
-            // se não for nulo, vamos setar os valores
             if(null != dados){
                 setNome(dados[0]);
                 setSenha(dados[1]);
                 setConta(dados[2]);
                 setSaldo(dados[3]);
                 setCredito(dados[4]);          
-                // se possuir mais campos, irá adiionar aqui, seguindo a ordem 
             }
         }   
     }
@@ -37,11 +26,7 @@ class ContaTxt {
     public String getNome() {
         return nome;
     }
-    /**
-     * Temos que garantir que esta String não possua o SEPARADOR
-     * Senão irá bugar
-     * @param nome
-     */
+
     public void setNome(String nome) {
         if(null != nome){
             if(nome.contains(SEPARADOR)){
@@ -84,7 +69,7 @@ class ContaTxt {
     		this.saldo = Double.toString(saldo);
     		return true;
     	} else
-    	return false; //não tem dindin
+    	return false;
     }
     
     public void depositar(double quantia){
@@ -93,15 +78,12 @@ class ContaTxt {
         this.saldo = Double.toString(saldo);
     }
     
-    /**
-     * Vamos concatenar os dados para salvar..
-     */
     public String gerarString(){
         final StringBuffer buffer = new StringBuffer();
         if(null != getNome()){
             buffer.append(getNome());
         }
-        //  inserimos ao separador
+
         buffer.append(SEPARADOR);
         if(null != getSenha()){
             buffer.append(getSenha());

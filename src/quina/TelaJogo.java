@@ -33,9 +33,7 @@ import java.util.Arrays;
 import java.util.Date;
 
 public class TelaJogo extends JFrame implements ActionListener {
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = 1L;
 	private JPanel painelNumeros, painelBotoes, painelInfo;
 	private JLabel labelDica;
@@ -45,7 +43,7 @@ public class TelaJogo extends JFrame implements ActionListener {
 	private Icon imagemApostar,  imagemBank, imagemSaldo,
 			imagemValores, imagemChances, imagemResultados, imagemAcertos;
 	private Icon[] indigos, azuis, rubros, dourados;
-	private GridLayout gridNumeros, gridBotoes, gridInfo;
+	private GridLayout gridNumeros, gridBotoes;
 	private Container container;
 	
 	int numerosTotal = 80, apostaMinima = 5, apostaMaxima = 15, concursoAtual=0;
@@ -66,17 +64,11 @@ public class TelaJogo extends JFrame implements ActionListener {
 	ArrayList listaRsltds = new ArrayList();
     ArrayList listaAcrts = new ArrayList();
     Popup objResultados, objAcertos;
-    String dadosContaString;//"nome,senha,conta,saldo,credito"
+    String dadosContaString;
     
-    //dadosContaString="";   
-      
-   
-    
-    // - - - - - - - - -// - - - - - - - - -// - - - - - - - -
-    // - - - - - - - - C O N S T R U C T O R  - - - - - - - - 
 	public TelaJogo() {
-		super("Quina 0.2");
-		//abrirArquivo();
+		super("Quina 0.3");
+
 		acertos = new int[apostaMinima];
 		sorteados = new int[apostaMinima];
 		numerosCartela = new int[numerosTotal];
@@ -96,7 +88,6 @@ public class TelaJogo extends JFrame implements ActionListener {
 		botaoSaldo.addActionListener(this);
 		botaoSaldo.setEnabled(false);
 		
-
 		imagemValores = new ImageIcon(getClass().getResource("/img/valores.png"));
 		botaoValores = new JButton("Valores", imagemValores);
 		botaoValores.addActionListener(this);
@@ -126,7 +117,7 @@ public class TelaJogo extends JFrame implements ActionListener {
 
 		gridNumeros = new GridLayout(8, 10, 1, 1);
 		gridBotoes = new GridLayout(7, 1, 1, 1);
-		gridInfo = new GridLayout(1,1,10,10);
+		new GridLayout(1,1,10,10);
 
 		painelBotoes.setLayout(gridBotoes);
 		painelNumeros.setLayout(gridNumeros);
@@ -166,14 +157,14 @@ public class TelaJogo extends JFrame implements ActionListener {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
-	} // fim do construtor TelaJogo
+	} 
 	
 	//------------------------------------------------------------------------------
 	// EVENTOS DE CLIQUE (MENU / BOTÃO)
 	//------------------------------------------------------------------------------
 	public void actionPerformed(ActionEvent evento) {
 		
-// APOSTAR 		
+	// APOSTAR 		
 		if (evento.getSource() == botaoApostar) {
 			if (!proxConc){
 				valorAposta = tabelaValor(palpite);
@@ -192,12 +183,12 @@ public class TelaJogo extends JFrame implements ActionListener {
 							} while (numerosCartela[bola] % 2 == 1);
 							if (numerosCartela[bola] == 2) {
 								numerosCartela[bola] = 3;
-								acertos[contaAcertos] = bola + 1; // adiciona ao array acertos
+								acertos[contaAcertos] = bola + 1;
 								contaAcertos++;
 							} else {
-								numerosCartela[bola] = 1; // marca a posição com 1 (já sorteado)
+								numerosCartela[bola] = 1;
 							}
-							sorteados[i] = bola + 1; // adiciona ao array sorteados
+							sorteados[i] = bola + 1;
 						}
 						Arrays.sort(sorteados);
 						String res = "";
@@ -334,7 +325,7 @@ public class TelaJogo extends JFrame implements ActionListener {
     						+ "13:        18.679           502         38          6\n"
     						+ "14:        12.008           364         31         5,8\n"
     						+ "15:          8.005           271         25         5,2\n\n"
-    						+ "\tQuina 0.1 - 07/2023 \n\treinaldo589@hotmail.com",
+    						+ "\tQuina 0.3 - 03/2025 \n\treinaldo589@hotmail.com",
     				"Probabilidades", 1);
 		}
  // RESULTADO       
@@ -477,26 +468,21 @@ public class TelaJogo extends JFrame implements ActionListener {
         try {
             isConc = new FileInputStream("conc");        
         InputStreamReader isr = new InputStreamReader(isConc);
-        //armazenando conteudo no arquivo no buffer
+
         BufferedReader br = new BufferedReader(isr);
-         String linha = br.readLine(); //primeiralinha
-         //a variavel linha recebe o valor 'null' quando chegar no final do arq
+         String linha = br.readLine(); 
+
         while (linha != null) {
-            listaRsltds.add(linha);//System.out.println(s);
+            listaRsltds.add(linha);
             linha = br.readLine();
         }
         concursoAtual=listaRsltds.size();
         if (listaRsltds.size()>0) {
-            //temResultado=true;
         	botaoResultados.setEnabled(true);
-        	//System.out.println("Resultados é true.");
         	}
         br.close();
         } catch (Exception ex) {
-           // ex.printStackTrace();
-        	System.out.println("Faça sua aposta.");
-        	//botaoResultados.setEnabled(false);
-        	
+        	System.out.println("Faça sua aposta.");      	
         }
         //DOIS OU + ACERTOS
         InputStream isAcer;
@@ -504,22 +490,17 @@ public class TelaJogo extends JFrame implements ActionListener {
             isAcer = new FileInputStream("acer");        
         InputStreamReader isr = new InputStreamReader(isAcer);
         BufferedReader br = new BufferedReader(isr);
-         String s = br.readLine(); //primeiralinha
+         String s = br.readLine();
         while (s != null) {
-            listaAcrts.add(s);//System.out.println(s);
+            listaAcrts.add(s);
             s = br.readLine();
         }
         if (listaAcrts.size()>0) {
-            //temAcerto=true;
         	botaoAcertos.setEnabled(true);
-        	//System.out.println("Acertos é true.");
         	}
         br.close();
         } catch (Exception ex) {
-            //ex.printStackTrace();
-        	System.out.println("Boa sorte!");
-        	// botaoAcertos.setEnabled(false);
-        	
+        	System.out.println("Boa sorte!");      	
         } 
     }
 //-----------------------------------------------------------------------   
@@ -549,7 +530,6 @@ public class TelaJogo extends JFrame implements ActionListener {
 		} catch (javax.swing.UnsupportedLookAndFeelException ex) {
 			java.util.logging.Logger.getLogger(TelaJogo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 		}
-
 		java.awt.EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				new TelaJogo().setVisible(true);

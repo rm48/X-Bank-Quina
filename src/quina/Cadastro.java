@@ -14,54 +14,36 @@ public class Cadastro {
 
 	public static final String ARQUIVO = "cadastro.txt";
 	
-	/**
-     * Adiciona o Cliente, passado via parametro
-     * @param clientToTxt
-     * @throws IOException
-     */
     public static void gravaCliente(ContaTxt clienteToTxt) throws IOException{
     	File arquivo = new File(ARQUIVO);
     	try {
     		if (!arquivo.exists()) {
-    		//cria um arquivo (vazio)
     		arquivo.createNewFile();
     		}
     	FileWriter fw = new FileWriter(ARQUIVO,true);
     	PrintWriter pw = new PrintWriter(fw);
     	pw.println(clienteToTxt.gerarString());
-    	fw.flush();	//libera a gravaçao
-    	fw.close();	//fecha o arquivo
+    	fw.flush();
+    	fw.close();
     	} catch (IOException ex) {
     		ex.printStackTrace();
     		}
     }
- // FIM de gravaCliente
-    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    //
-     /*
-     * Retorna as linhas de cadastro.txt no formato List
-     */
+
     public static List<ContaTxt> leCntas() throws IOException{
     	File arquivo = new File(ARQUIVO);
-    	 //Lista que vamos retornar
         List<ContaTxt> listOnTxt = new ArrayList<ContaTxt>(0);
     	try {
     		if (arquivo.exists()) {
     	
         FileReader arq = new FileReader(ARQUIVO);
-        //armazenando conteudo no arquivo no buffer
         BufferedReader lerArq = new BufferedReader(arq);
-        String linha = lerArq.readLine();//primeiralinha
-        //criando objeto clientela para popular a listOnTxt
-        ContaTxt clientela = new ContaTxt(linha);//ja pega a linha 0
+        String linha = lerArq.readLine();
+        ContaTxt clientela = new ContaTxt(linha);
         listOnTxt.add(clientela);        
-        //a variavel linha recebe o valor 'null' quando chegar no final do arquivo
+
         while (linha != null){
-            //System.out.printf("%s\n",linha);
-            //lendo a segundo até a última
             linha = lerArq.readLine();
-            // Passamos a linha para popular o objeto, 
-            // se não for vazia
             if(null != linha && !"".equals(linha) ){
                 clientela = new ContaTxt(linha);
                 listOnTxt.add(clientela);
@@ -71,17 +53,11 @@ public class Cadastro {
        
     		}
     	} catch (IOException ex) {
-    		//ex.printStackTrace();
     		System.out.println("Abra uma conta.");
     		}
     	 return listOnTxt;
     }
-    // FIM de leCntas
-    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    //
-    /*
-     * Atualiza uma linha no arquivo cadastro.txt
-     */
+
     public static void replaceLinha( String linhaAlterar, String linhaAlterada) {
     File f = new File(ARQUIVO);    
     File nf = new File("temporario.tmp");
@@ -115,12 +91,7 @@ public class Cadastro {
         f.delete();
         nf.renameTo(f);
     }
-    // FIM de replaceLinha
-    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-     //
-     /*
-     * Exclui uma linha no arquivo cadastro.txt
-     */
+
     public static void excluirLinha(String contaAExcluir) {                                                  
         FileReader fileReader = null;  
         FileWriter fileWriter = null;   
@@ -153,5 +124,4 @@ public class Cadastro {
                 } 
             } 
     }
-    // FIM de excluirLinha
 }

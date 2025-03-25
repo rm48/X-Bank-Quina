@@ -10,18 +10,14 @@ public class Popup extends JFrame{
 	public Popup(String text, String titulo, int x, int y, int larg, int alt) {
         super(titulo);
         container = getContentPane();
-
         textArea = new JTextArea();
         textArea.append(text);
         container.add(new JScrollPane(textArea), BorderLayout.CENTER);
-        //setSize(200, 300);
         setSize(larg, alt);
-        //setLocation(25, 75);
         setLocation(x, y);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setVisible(true);
-        setResizable(false);
-        
+        setResizable(false);     
     }
     private JTextArea textArea;
     private Container container;
