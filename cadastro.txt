@@ -1,1 +1,5 @@
 gus,gu,1,0.0,70000.0
+dudu,du,2,90.055,130000.0
+wesleybogd,we,3,0.0,175000.0
+blaquigato,bl,4,0.0,190000.0
+juvenalgop,ju,5,-90.055,190000.0

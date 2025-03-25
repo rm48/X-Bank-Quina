@@ -8,7 +8,6 @@ import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Random;
 import java.awt.Font;
-
 import static javax.swing.BorderFactory.createEtchedBorder;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -46,12 +45,22 @@ public class Atm extends JDialog {
 	Random bonus = new Random();
 	JComboBox combobox = new JComboBox();
 
-	public Atm(Frame frame) {
-		super(frame, true);
+	public Atm(Frame frame) {		
 		initComponents();
+		
+		tfNome.setDocument(new LimitaCaracteres(10, LimitaCaracteres.TipoEntrada.NOME));
+		tfConta.setDocument(new LimitaCaracteres(2, LimitaCaracteres.TipoEntrada.NUMEROINTEIRO));
+		tfSenha.setDocument(new LimitaCaracteres(2, LimitaCaracteres.TipoEntrada.NOME));
+		tfValor.setDocument(new LimitaCaracteres(6, LimitaCaracteres.TipoEntrada.NUMERODECIMAL));
+		
+		
+		
 	}
 
 	private void initComponents() {
+		
+		
+		
 		Font fonte1 = new Font("Trebuchet MS", 1, 38);
 		Font fonte2 = new Font("Arial", 1, 12);
 		lbTitulo = new JLabel("X-BANK");
@@ -471,11 +480,11 @@ public class Atm extends JDialog {
 		jPanel1.setBounds(10, 80, 420, 340);
 		jPanel2.setBounds(180, 90, 240, 66);
 		lbNome.setBounds(20, 90, 50, 20);
-		tfNome.setBounds(80, 90, 80, 24);
+		tfNome.setBounds(80, 90, 80, 28);
 		lbConta.setBounds(20, 132, 50, 20);
-		tfConta.setBounds(80, 132, 80, 24);
+		tfConta.setBounds(80, 132, 80, 28);
 		lbSenha.setBounds(20, 174, 50, 20);
-		tfSenha.setBounds(80, 174, 80, 24);
+		tfSenha.setBounds(80, 174, 80, 28);
 		lbValor.setBounds(210, 110, 40, 20);
 		lbInfo.setBounds(70, 425, 308, 20);
 		tfValor.setBounds(260, 110, 120, 24);
