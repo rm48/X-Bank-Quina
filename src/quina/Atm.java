@@ -47,20 +47,10 @@ public class Atm extends JDialog {
 
 	public Atm(Frame frame) {		
 		initComponents();
-		
-		tfNome.setDocument(new LimitaCaracteres(10, LimitaCaracteres.TipoEntrada.NOME));
-		tfConta.setDocument(new LimitaCaracteres(2, LimitaCaracteres.TipoEntrada.NUMEROINTEIRO));
-		tfSenha.setDocument(new LimitaCaracteres(2, LimitaCaracteres.TipoEntrada.NOME));
-		tfValor.setDocument(new LimitaCaracteres(6, LimitaCaracteres.TipoEntrada.NUMERODECIMAL));
-		
-		
-		
 	}
 
-	private void initComponents() {
-		
-		
-		
+	private void initComponents() {		
+				
 		Font fonte1 = new Font("Trebuchet MS", 1, 38);
 		Font fonte2 = new Font("Arial", 1, 12);
 		lbTitulo = new JLabel("X-BANK");
@@ -198,6 +188,7 @@ public class Atm extends JDialog {
 						btAcessar.setEnabled(true);
 						btCadastrar.setEnabled(false);
 						btAcessar.doClick();
+						btJogar.setEnabled(true);
 					}
 					else
 						JOptionPane.showMessageDialog(rootPane,
@@ -347,6 +338,7 @@ public class Atm extends JDialog {
 					btTransferir.setEnabled(true);
 					btCadastrar.setEnabled(false);
 					btExcluir.setEnabled(true);
+					btJogar.setEnabled(true);
 
 				}
 			}
@@ -473,7 +465,7 @@ public class Atm extends JDialog {
 				btCadastrar.setEnabled(true);
 				btSair.setEnabled(false);
 				btExcluir.setEnabled(false);
-			}
+				btJogar.setEnabled(false);			}
 		});
 		
 		lbTitulo.setBounds(30, 18, 390, 45);
