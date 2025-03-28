@@ -55,6 +55,7 @@ public class TelaJogo extends JFrame implements ActionListener {
 	boolean saldoBoleano,
 			objResCriado=false, objAceCriado=false;;
 	static boolean transferiu = false;
+	static boolean objAtmCriado=false;
 	
 	Date data;
     SimpleDateFormat formatada;
@@ -65,9 +66,10 @@ public class TelaJogo extends JFrame implements ActionListener {
     ArrayList listaAcrts = new ArrayList();
     Popup objResultados, objAcertos;
     String dadosContaString;
+    static Atm objAtm;
     
 	public TelaJogo() {
-		super("Quina 0.3");
+		super("Quina 0.3.1");
 
 		acertos = new int[apostaMinima];
 		sorteados = new int[apostaMinima];
@@ -166,7 +168,7 @@ public class TelaJogo extends JFrame implements ActionListener {
 		
 	// APOSTAR 		
 		if (evento.getSource() == botaoApostar) {
-			if (!proxConc){
+			if (!proxConc && !objAtmCriado){
 				valorAposta = tabelaValor(palpite);
 				if (!(contaDispnvl)){ 
 	                JOptionPane.showMessageDialog(painelNumeros,"Voce precisa acessar uma conta primeiro.");
@@ -267,8 +269,12 @@ public class TelaJogo extends JFrame implements ActionListener {
 
 // ACESSAR CONTATXT
         else if ( evento.getSource() == botaoBank) {
-            Frame acesso = null;
-            new Atm(acesso);
+//            Frame acesso = null;
+//            new Atm(acesso);
+        	if (objAtmCriado == true)
+                objAtm.dispose();
+            objAtm = new Atm();
+            objAtmCriado = true;
             if (!"".equals(Atm.nomeLog)) {
                 dadosContaString=Atm.contatxtLidaAtual.getNome()+","+Atm.contatxtLidaAtual.getSenha()
                                     +","+Atm.contatxtLidaAtual.getConta()+","+Atm.saldoLog
@@ -325,7 +331,7 @@ public class TelaJogo extends JFrame implements ActionListener {
     						+ "13:        18.679           502         38          6\n"
     						+ "14:        12.008           364         31         5,8\n"
     						+ "15:          8.005           271         25         5,2\n\n"
-    						+ "\tQuina 0.3 - 03/2025 \n\treinaldo589@hotmail.com",
+    						+ "\tQuina 0.3.1 - 03/2025 \n\treinaldo589@hotmail.com",
     				"Probabilidades", 1);
 		}
  // RESULTADO       

@@ -1,6 +1,5 @@
 package quina;
 
-import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -45,12 +44,13 @@ public class Atm extends JDialog {
 	Random bonus = new Random();
 	JComboBox combobox = new JComboBox();
 
-	public Atm(Frame frame) {		
+//	public Atm(Frame frame) {
+	public Atm() {
+		//super(frame, true);
 		initComponents();
 	}
 
-	private void initComponents() {		
-				
+	private void initComponents() {					
 		Font fonte1 = new Font("Trebuchet MS", 1, 38);
 		Font fonte2 = new Font("Arial", 1, 12);
 		lbTitulo = new JLabel("X-BANK");
@@ -440,6 +440,7 @@ public class Atm extends JDialog {
 				
 				if (secure) {
 					dispose();
+					TelaJogo.objAtmCriado = false;
 				}
 				else
 					JOptionPane.showMessageDialog(rootPane, "Você não está logado!");
